@@ -1,3 +1,6 @@
+" TODO: pass stop_on_empty var.
+" possibly unite high-level functions into one?
+" extend range for yaml lists-like strings
 " mappings
 " visual
 vnoremap ii :<c-u>call indent#Inside()<CR>
@@ -50,28 +53,24 @@ endfunction
 
 function! indent#LookUp(indent_regex, stop_on_empty)
     let curline = line('.')
-    let rangestart = curline
-    while curline > 0
+    while curline > 1
         if ! indent#CheckLine(curline - 1, a:indent_regex, a:stop_on_empty)
-            let rangestart = curline
             break
         endif
         let curline -= 1
     endwhile
-    return rangestart
+    return curline
 endfunction
 
 function! indent#LookDown(indent_regex, stop_on_empty)
     let curline = line('.')
-    let rangestop = curline
-    while curline <= line('$')
+    while curline < line('$')
         if ! indent#CheckLine(curline + 1, a:indent_regex, a:stop_on_empty)
-            let rangestop = curline
             break
         endif
         let curline += 1
     endwhile
-    return rangestop
+    return curline
 endfunction
 
 function! indent#GetRange(look_up, look_down, ...)
