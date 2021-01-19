@@ -103,7 +103,7 @@ endfunction
 
 function! indent#Select(start, end)
     execute a:start
-    normal! V
+    execute "normal! vV"
     execute a:end
 endfunction
 
