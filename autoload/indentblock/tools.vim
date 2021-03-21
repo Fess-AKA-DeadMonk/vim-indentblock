@@ -7,7 +7,7 @@ function! indentblock#tools#VarPrecedence(varname)
             return returnval
         endif
     endfor
-    throw varname .. " undefined"
+    throw a:varname .. " undefined"
 endfunction
 
 function! indentblock#tools#CheckLine(linenum, regex, stop_on_empty)
@@ -46,7 +46,7 @@ function! indentblock#tools#GetRange(look_up, look_down, ...)
     if a:0 > 0
         let stop_on_empty = a:1
     else
-        let stop_on_empty = indentblock#tools#VarPrecedence('indent_stop_on_empty')
+        let stop_on_empty = indentblock#tools#VarPrecedence('indentblock_stop_on_empty')
     endif
 
     normal! ^
@@ -82,8 +82,8 @@ endfunction
 
 function! indentblock#tools#Around()
     let [rangestart, rangestop, indentsize, startline] = indentblock#tools#GetRange(1, 1)
-    let indent_lineafter = indentblock#tools#VarPrecedence('indent_lineafter')
-    let indent_linebefore = indentblock#tools#VarPrecedence('indent_linebefore')
+    let indent_lineafter = indentblock#tools#VarPrecedence('indentblock_lineafter')
+    let indent_linebefore = indentblock#tools#VarPrecedence('indentblock_linebefore')
     call indentblock#tools#Select(rangestart - indent_linebefore, rangestop + indent_lineafter)
 endfunction
 
