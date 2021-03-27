@@ -22,3 +22,11 @@ let g:indentblock_stop_on_empty = 0
 let g:indentblock_linebefore = 1
 " set to 0 for python and ansible
 let g:indentblock_lineafter = 1
+
+" this is the easiest way to set correct value for cases of switching
+" filetype back and forth
+augroup vim_indent
+    autocmd!
+    autocmd FileType * let b:indentblock_lineafter = 1
+    autocmd FileType yaml,yaml.ansible,yml,python let b:indentblock_lineafter = 0
+augroup END
